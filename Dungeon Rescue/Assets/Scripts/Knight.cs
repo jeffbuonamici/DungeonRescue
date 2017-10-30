@@ -8,15 +8,19 @@ public class Knight : MonoBehaviour {
 	float mMoveSpeed;
 	[SerializeField]
 	float mJumpForce;
+    [SerializeField]
+    LayerMask mWhatIsGround;
+    float kGroundCheckRadius = 0.1f;
 
-	// Animator Booleans
-	bool mWalking;
+    // Animator Booleans
+    bool mWalking;
 
 	// References to other components and game objects
 	Animator mAnimator;
 	Rigidbody2D mRigidBody2D;
+    public List<GroundCheck> mGroundCheckList;
 
-	Vector2 mFacingDirection;
+    Vector2 mFacingDirection;
 
 	// Use this for initialization
 	void Start () {
@@ -42,7 +46,17 @@ public class Knight : MonoBehaviour {
 			FaceDirection(Vector2.right);
 			mWalking = true;
 		}
-		UpdateAnimator();
+        bool grounded = CheckGrounded();
+
+        if (grounded && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
+        {
+            //Debug.Log("My jump velocity when I jump is: " + mJumpForce);
+            mRigidBody2D.AddForce(Vector2.up * mJumpForce, ForceMode2D.Impulse);
+        }
+
+            
+
+        UpdateAnimator();
 	}
 
 	public Vector2 GetFacingDirection()
@@ -70,4 +84,16 @@ public class Knight : MonoBehaviour {
 		mAnimator.SetBool ("isWalking", mWalking);
 		//mAnimator.SetBool ("isGrounded", mGrounded);
 	}
+
+    private bool CheckGrounded()
+    {
+        foreach (GroundCheck g in mGroundCheckList)
+        {
+            if (g.CheckGrounded(kGroundCheckRadius, mWhatIsGround, gameObject))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
