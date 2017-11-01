@@ -48,7 +48,7 @@ public class Dragon : MonoBehaviour {
 					cooldownTimer = attackDelay;
 			}
 		}
-
+        Debug.Log(cooldownTimer);
 		isWalking = false;
 		isAttacking = false;
 	}
