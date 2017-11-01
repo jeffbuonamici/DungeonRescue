@@ -9,6 +9,7 @@ public class HeartBar : MonoBehaviour
     GameObject[] listHearts;
 
     int index;
+    int healthPoint = 10;
 
     // Use this for initialization
     void Start()
@@ -19,33 +20,34 @@ public class HeartBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (healthPoint == 0)
         {
-            loseHeart(1);
-            Debug.Log(index);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            gainHeart(1);
-            Debug.Log(index);
+            Application.LoadLevel("GameOver");
         }
     }
 
-    void loseHeart(int dmg)
+    public void loseHeart(int dmg)
     {
-        for (int i = 0; i < dmg; i++)
+        healthPoint -= dmg;
+        if (healthPoint >= 0)
         {
-            listHearts[index].active = false;
-            index--;
+            for (int i = 0; i < dmg; i++)
+            {
+                listHearts[index].active = false;
+                index--;
+            }
         }
-        if (index < 0)
+        else
         {
-            Time.timeScale = 0;
-            index = 0;
+            for (int i = 0; i < listHearts.Length-1; i++)
+            {
+                listHearts[i].active = false;
+            }
+            healthPoint = 0;
         }
     }
 
-    void gainHeart(int heart)
+    public void gainHeart(int heart)
     {
         for (int i = 0; i < heart; i++)
         {

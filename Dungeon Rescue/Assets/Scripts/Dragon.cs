@@ -15,14 +15,20 @@ public class Dragon : MonoBehaviour {
 	[SerializeField]
 	float mCloseRange;
 
-	public float attackDelay;
+    [SerializeField]
+    GameObject mfireBreathPrefab;
+
+    float fireBreathTimer=0;
+
+    public float attackDelay;
 	float cooldownTimer = 0f;
 
 	bool isWalking;
 	bool isAttacking;
 
-	// Use this for initialization
-	void Start () {
+    GameObject fireBreath;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -48,8 +54,19 @@ public class Dragon : MonoBehaviour {
 					cooldownTimer = attackDelay;
 			}
 		}
-        Debug.Log(cooldownTimer);
-		isWalking = false;
+
+        if (fireBreath != null)
+        {
+            fireBreathTimer += Time.deltaTime;
+            fireBreath.transform.position = new Vector3(transform.position.x - 4, transform.position.y + 0.6f);
+            if (fireBreathTimer > 1)
+            {
+                Destroy(fireBreath);
+                fireBreathTimer = 0;
+            }
+        }
+
+        isWalking = false;
 		isAttacking = false;
 	}
 
@@ -63,5 +80,7 @@ public class Dragon : MonoBehaviour {
 		cooldownTimer = attackDelay;
 		isAttacking = true;
 		Debug.Log ("Attack!");
-	}
+        fireBreath = Instantiate(mfireBreathPrefab, new Vector3(transform.position.x-4, transform.position.y+0.6f), Quaternion.identity);
+       
+    }
 }

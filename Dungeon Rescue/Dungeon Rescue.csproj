@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BackToMenu.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Dragon.cs" />
     <Compile Include="Assets\Scripts\GrapplingHook.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\HeartBar.cs" />
     <Compile Include="Assets\Scripts\Knight.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MonstersCollision.cs" />
     <Compile Include="Assets\Scripts\OnHover.cs" />
     <Compile Include="Assets\Scripts\Sword.cs" />
   </ItemGroup>
