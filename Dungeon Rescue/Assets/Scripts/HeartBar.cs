@@ -8,13 +8,11 @@ public class HeartBar : MonoBehaviour
     [SerializeField]
     GameObject[] listHearts;
 
-    int index;
     int healthPoint = 10;
 
     // Use this for initialization
     void Start()
     {
-        index = listHearts.Length - 1;
     }
 
     // Update is called once per frame
@@ -28,18 +26,17 @@ public class HeartBar : MonoBehaviour
 
     public void loseHeart(int dmg)
     {
-        healthPoint -= dmg;
         if (healthPoint >= 0)
         {
             for (int i = 0; i < dmg; i++)
             {
-                listHearts[index].active = false;
-                index--;
+                healthPoint--;
+                listHearts[healthPoint].active = false;
             }
         }
         else
         {
-            for (int i = 0; i < listHearts.Length-1; i++)
+            for (int i = 0; i < listHearts.Length - 1; i++)
             {
                 listHearts[i].active = false;
             }
@@ -49,14 +46,21 @@ public class HeartBar : MonoBehaviour
 
     public void gainHeart(int heart)
     {
-        for (int i = 0; i < heart; i++)
+        if (healthPoint + heart <= 10)
         {
-            listHearts[index].active = true;
-            index++;
+            for (int i = 0; i < heart; i++)
+            {
+                listHearts[healthPoint].active = true;
+                healthPoint++;
+            }
         }
-        if (index > 9)
+        else
         {
-            index = 9;
+            for (int i = 0; i < listHearts.Length - 1; i++)
+            {
+                listHearts[i].active = true;
+            }
+            healthPoint = 10;
         }
     }
 

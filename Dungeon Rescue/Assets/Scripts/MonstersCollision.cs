@@ -11,6 +11,12 @@ public class MonstersCollision : MonoBehaviour
         {
             gameObject.GetComponent<Knight>().TakeDamage(1);
         }
+
+        if (col.gameObject.name == "potion")
+        {
+            gameObject.GetComponent<Knight>().HealHP(2);
+            Destroy(col.gameObject);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
