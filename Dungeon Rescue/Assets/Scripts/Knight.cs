@@ -125,4 +125,9 @@ public class Knight : MonoBehaviour {
             life.loseHeart(dmg);
         }
     }
+
+    public void HealHP(int health)
+    {
+        life.gainHeart(health);
+    }
 }
