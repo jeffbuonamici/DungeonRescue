@@ -28,7 +28,13 @@ public class Knight : MonoBehaviour {
     // Invincibility timer
     float kInvincibilityDuration = 1.0f;
     float mInvincibleTimer;
-    bool mInvincible;
+    public bool mInvincible;
+
+    // Stun timer
+    float kStunDuration = 1.0f;
+    float mStunTimer;
+    bool mStun = false;
+
     float kDamagePushForce = 2.5f;
 
     // Use this for initialization
@@ -42,14 +48,14 @@ public class Knight : MonoBehaviour {
 	void Update () {
 		mWalking = false;
 		// Move left
-		if(Input.GetKey(KeyCode.A))
+		if(Input.GetKey(KeyCode.A) && !mStun)
 		{
 			transform.Translate (-Vector2.right * mMoveSpeed * Time.deltaTime);
 			FaceDirection(-Vector2.right);
 			mWalking = true;
 		}
 		// Move right
-		if(Input.GetKey(KeyCode.D))
+		if(Input.GetKey(KeyCode.D) && !mStun)
 		{
 			transform.Translate (Vector2.right * mMoveSpeed * Time.deltaTime);
 			FaceDirection(Vector2.right);
@@ -57,7 +63,7 @@ public class Knight : MonoBehaviour {
 		}
         bool grounded = CheckGrounded();
 
-        if (grounded && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
+        if (grounded && !mStun && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
         {
             //Debug.Log("My jump velocity when I jump is: " + mJumpForce);
             mRigidBody2D.AddForce(Vector2.up * mJumpForce, ForceMode2D.Impulse);
@@ -116,6 +122,8 @@ public class Knight : MonoBehaviour {
 
     public void TakeDamage(int dmg)
     {
+        mStun = true;
+        Invoke("stunOff", 0.5f);
         if (!mInvincible)
         {
             Vector2 forceDirection = new Vector2(-mFacingDirection.x, 1.0f) * kDamagePushForce;
@@ -124,6 +132,11 @@ public class Knight : MonoBehaviour {
             mInvincible = true;
             life.loseHeart(dmg);
         }
+    }
+
+    void stunOff()
+    {
+        mStun = false;
     }
 
     public void HealHP(int health)

@@ -10,6 +10,11 @@ public class MonstersCollision : MonoBehaviour
         if (col.gameObject.name == "dragon")
         {
             gameObject.GetComponent<Knight>().TakeDamage(1);
+            if (gameObject.GetComponent<Knight>().mInvincible)
+            {
+                Debug.Log("a");
+                gameObject.GetComponent<Knight>().TakeDamage(0);
+            }
         }
 
         if (col.gameObject.name == "potion")
