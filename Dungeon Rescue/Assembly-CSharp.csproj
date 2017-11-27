@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\dropDamage.cs" />
      <Compile Include="Assets\Scripts\BackToMenu.cs" />
      <Compile Include="Assets\Scripts\Bat.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />

@@ -10,16 +10,17 @@ public class Knight : MonoBehaviour {
 	float mJumpForce;
     [SerializeField]
     LayerMask mWhatIsGround;
-    float kGroundCheckRadius = 0.1f;
+    float kGroundCheckRadius = 0.05f;
 
     [SerializeField]
     HeartBar life;
 
     // Animator Booleans
     bool mWalking;
+    bool mJumping;
 
-	// References to other components and game objects
-	Animator mAnimator;
+    // References to other components and game objects
+    Animator mAnimator;
 	Rigidbody2D mRigidBody2D;
     public List<GroundCheck> mGroundCheckList;
 
@@ -35,6 +36,8 @@ public class Knight : MonoBehaviour {
     float mStunTimer;
     bool mStun = false;
 
+    bool grounded = true;
+
     float kDamagePushForce = 2.5f;
 
     // Use this for initialization
@@ -43,10 +46,44 @@ public class Knight : MonoBehaviour {
 		mAnimator = GetComponent<Animator>();
 		mRigidBody2D = GetComponent<Rigidbody2D>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		mWalking = false;
+
+    void endJump()
+    {
+        if (grounded)
+        {
+            Debug.Log("a");
+            mJumping = false;
+        }
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+        //bool grounded = CheckGrounded();
+        grounded = CheckGrounded();
+
+        endJump();
+        
+        if (!grounded)
+        {
+            mAnimator.SetBool("isFalling", true);
+        }
+        else
+        {
+            mAnimator.SetBool("isFalling", false);
+        }
+
+
+        if (grounded && !mStun && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
+        {
+            mJumping = true;
+            mAnimator.SetBool("isFalling", false);
+            //Debug.Log("My jump velocity when I jump is: " + mJumpForce);
+            mRigidBody2D.AddForce(Vector2.up * mJumpForce, ForceMode2D.Impulse);
+        }
+
+
+        mWalking = false;
 		// Move left
 		if(Input.GetKey(KeyCode.A) && !mStun)
 		{
@@ -61,14 +98,8 @@ public class Knight : MonoBehaviour {
 			FaceDirection(Vector2.right);
 			mWalking = true;
 		}
-        bool grounded = CheckGrounded();
 
-        if (grounded && !mStun && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
-        {
-            //Debug.Log("My jump velocity when I jump is: " + mJumpForce);
-            mRigidBody2D.AddForce(Vector2.up * mJumpForce, ForceMode2D.Impulse);
-        }
-        
+       
         UpdateAnimator();
 
         if (mInvincible)
@@ -104,8 +135,11 @@ public class Knight : MonoBehaviour {
 
 	private void UpdateAnimator()
 	{
-		mAnimator.SetBool ("isWalking", mWalking);
-		//mAnimator.SetBool ("isGrounded", mGrounded);
+        if (!mJumping)
+		    mAnimator.SetBool ("isWalking", mWalking);
+        mAnimator.SetBool("isJumping", mJumping);
+        mAnimator.SetBool ("isSwinging", GrapplingHook.swinging);
+      
 	}
 
     private bool CheckGrounded()
