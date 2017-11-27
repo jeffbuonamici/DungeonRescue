@@ -12,20 +12,54 @@ public class FollowTarget : MonoBehaviour {
 	float mFollowRange;
 
 	float mArriveThreshold = 0.05f;
+	Vector2 mFacingDirection;
 
 	void Update ()
 	{
 		if(mTarget != null)
 		{
-			// TODO: Make the enemy follow the target "mTarget"
-			//       only if the target is close enough (distance smaller than "mFollowRange")
-			if (Vector2.Distance (transform.position, mTarget.transform.position) < mFollowRange)
+			if (Vector2.Distance (transform.position, mTarget.transform.position) < mFollowRange) {
 				transform.position += (mTarget.transform.position - transform.position).normalized * Time.deltaTime;
+
+				if (mTarget.position.x < transform.position.x) {
+					FaceDirection(-Vector2.right);
+				} else if(mTarget.position.x >= transform.position.x){
+					FaceDirection(Vector2.right);
+				}
+			}
 		}
 	}
 
 	public void SetTarget(Transform target)
 	{
 		mTarget = target;
+	}
+
+	bool changed(float a,float b){
+		if((int)a == (int)b){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	private void FaceDirection(Vector2 direction)
+	{
+		mFacingDirection = direction;
+		if(direction == Vector2.right)
+		{
+			Vector3 newScale = new Vector3(Mathf.Abs (transform.localScale.x), transform.localScale.y, transform.localScale.z);
+			transform.localScale = newScale;
+		}
+		else
+		{
+			Vector3 newScale = new Vector3(-Mathf.Abs (transform.localScale.x), transform.localScale.y, transform.localScale.z);
+			transform.localScale = newScale;
+		}
+	}
+
+	public Vector2 GetFacingDirection()
+	{
+		return mFacingDirection;
 	}
 }
