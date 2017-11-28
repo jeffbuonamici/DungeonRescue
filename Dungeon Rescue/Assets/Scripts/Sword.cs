@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour {
 
+	[SerializeField]
+	GameObject Knight;
+
 	Animator mAnimator;
 	bool mAttacking;
 	float kAttackDuration = 0.4f;
@@ -18,7 +21,7 @@ public class Sword : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space) && !mAttacking) {
+		if (Input.GetKeyDown (KeyCode.Space) && !mAttacking && !Knight.GetComponent<Knight>().getmJumping()) {
 			mAttacking = true;
 			mTime = 0.0f;
 			Attack ();

@@ -1746,7 +1746,7 @@ MonoBehaviour:
   mFollowSpeed: 3
   mAggroRange: 7
   mIdleRange: 3
-  mCloseRange: 1
+  mCloseRange: 2
   health: 40
   mAnimator: {fileID: 649180454}
   attackDelay: 1
