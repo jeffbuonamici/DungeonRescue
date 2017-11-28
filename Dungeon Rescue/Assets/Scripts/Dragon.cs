@@ -97,7 +97,6 @@ public class Dragon : MonoBehaviour {
 		isAttacking = true;
 		Debug.Log ("Attack!");
         fireBreath = Instantiate(mfireBreathPrefab, new Vector3(transform.position.x-4, transform.position.y+0.6f), Quaternion.identity);
-       
     }
 
 	void OnTriggerStay2D(Collider2D col)
