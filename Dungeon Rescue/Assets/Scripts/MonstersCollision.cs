@@ -12,6 +12,7 @@ public class MonstersCollision : MonoBehaviour
             gameObject.GetComponent<Knight>().TakeDamage(1);
             if (gameObject.GetComponent<Knight>().mInvincible)
             {
+                Debug.Log("a");
                 gameObject.GetComponent<Knight>().TakeDamage(0);
             }
         }
