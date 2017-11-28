@@ -14,6 +14,8 @@ public class Dragon : MonoBehaviour {
 	float mIdleRange;
 	[SerializeField]
 	float mCloseRange;
+	[SerializeField]
+	int health;
 
     [SerializeField]
     GameObject mfireBreathPrefab;
@@ -57,7 +59,6 @@ public class Dragon : MonoBehaviour {
 			}
             else if (Vector2.Distance(transform.position, mTarget.transform.position) > mAggroRange)
             {
-                Debug.Log("far");
                 isWalking = false;
             }
 		}
@@ -98,4 +99,24 @@ public class Dragon : MonoBehaviour {
         fireBreath = Instantiate(mfireBreathPrefab, new Vector3(transform.position.x-4, transform.position.y+0.6f), Quaternion.identity);
        
     }
+
+	void OnTriggerStay2D(Collider2D col)
+	{
+		if (col.gameObject.name == "Sword") {
+			TakeDamage (col.gameObject.GetComponent<Sword>().getSwordDamage());
+			Debug.Log ("Dragon Hit!");
+			col.gameObject.GetComponent<BoxCollider2D> ().enabled = false;
+		}
+	}
+
+	void TakeDamage(int damage) {
+		health -= damage;
+
+		if (health <= 0)
+			Die ();
+	}
+
+	void Die() {
+		Destroy (gameObject);
+	}
 }

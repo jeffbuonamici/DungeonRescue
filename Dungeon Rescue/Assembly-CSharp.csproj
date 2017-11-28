@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\MonstersCollision.cs" />
      <Compile Include="Assets\Scripts\OnHover.cs" />
      <Compile Include="Assets\Scripts\Potion.cs" />
+     <Compile Include="Assets\Scripts\Shade.cs" />
      <Compile Include="Assets\Scripts\Sword.cs" />
      <Compile Include="Assets\Scripts\dropDamage.cs" />
      <None Include="Assets\Knight Files\Read Me.txt" />
