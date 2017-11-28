@@ -75,7 +75,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.52}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,14 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mMoveSpeed: 5
-  mJumpForce: 0
-  mWhatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
-  life: {fileID: 0}
-  mGroundCheckList: []
-  mInvincible: 0
-  mJumpCD: 0
 --- !u!212 &212934878036173892
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -167,3 +159,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
