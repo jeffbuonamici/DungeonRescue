@@ -55,7 +55,6 @@ public class Knight : MonoBehaviour {
     {
         if (grounded)
         {
-            Debug.Log("a");
             mJumping = false;
         }
     }

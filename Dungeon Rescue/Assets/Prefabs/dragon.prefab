@@ -116,6 +116,7 @@ MonoBehaviour:
   mAggroRange: 10
   mIdleRange: 7
   mCloseRange: 5
+  mfireBreathPrefab: {fileID: 0}
   attackDelay: 2
 --- !u!212 &212936675660607900
 SpriteRenderer:
@@ -158,4 +159,3 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
