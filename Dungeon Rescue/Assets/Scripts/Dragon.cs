@@ -18,6 +18,8 @@ public class Dragon : MonoBehaviour {
     [SerializeField]
     GameObject mfireBreathPrefab;
 
+    public Animator mAnimator;
+
     float fireBreathTimer=0;
 
     public float attackDelay;
@@ -53,6 +55,11 @@ public class Dragon : MonoBehaviour {
 				else 
 					cooldownTimer = attackDelay;
 			}
+            else if (Vector2.Distance(transform.position, mTarget.transform.position) > mAggroRange)
+            {
+                Debug.Log("far");
+                isWalking = false;
+            }
 		}
 
         if (fireBreath != null)
@@ -66,11 +73,19 @@ public class Dragon : MonoBehaviour {
             }
         }
 
-        isWalking = false;
-		isAttacking = false;
+        UpdateAnimator();
+
+        //isWalking = false;
+        isAttacking = false;
 	}
 
-	int DetermineAttack() {
+    private void UpdateAnimator()
+    {
+        mAnimator.SetBool("isWalking", isWalking);
+    }
+
+
+    int DetermineAttack() {
 		System.Random rnd = new System.Random ();
 		int value = rnd.Next (1, 10);
 		return value;

@@ -31,6 +31,10 @@ public class Knight : MonoBehaviour {
     float mInvincibleTimer;
     public bool mInvincible;
 
+    float jumpCooldDown = 1.2f;
+    float mJumpTimer;
+    public bool mJumpCD;
+
     // Stun timer
     float kStunDuration = 1.0f;
     float mStunTimer;
@@ -51,6 +55,7 @@ public class Knight : MonoBehaviour {
     {
         if (grounded)
         {
+            Debug.Log("a");
             mJumping = false;
         }
     }
@@ -72,13 +77,23 @@ public class Knight : MonoBehaviour {
             mAnimator.SetBool("isFalling", false);
         }
 
+        if (mJumpCD)
+        {
+            mJumpTimer += Time.deltaTime;
+            if (mJumpTimer >= jumpCooldDown)
+            {
+                mJumpCD = false;
+                mJumpTimer = 0.0f;
+            }
+        }
 
-        if (grounded && !mStun && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
+        if (!mJumpCD && grounded && !mStun && Input.GetKey(KeyCode.W) && GetComponent<Rigidbody2D>().velocity.y < 0.1)
         {
             mJumping = true;
             mAnimator.SetBool("isFalling", false);
             //Debug.Log("My jump velocity when I jump is: " + mJumpForce);
             mRigidBody2D.AddForce(Vector2.up * mJumpForce, ForceMode2D.Impulse);
+            mJumpCD = true;
         }
 
 
