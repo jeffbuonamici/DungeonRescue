@@ -57,7 +57,6 @@ public class Dragon : MonoBehaviour {
 			}
             else if (Vector2.Distance(transform.position, mTarget.transform.position) > mAggroRange)
             {
-                Debug.Log("far");
                 isWalking = false;
             }
 		}
