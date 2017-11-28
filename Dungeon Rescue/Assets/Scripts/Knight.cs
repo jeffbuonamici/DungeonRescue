@@ -190,8 +190,4 @@ public class Knight : MonoBehaviour {
     {
         life.gainHeart(health);
     }
-
-	public bool getmJumping() {
-		return mJumping;
-	}
 }
