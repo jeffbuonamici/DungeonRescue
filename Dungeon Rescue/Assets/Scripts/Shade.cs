@@ -37,45 +37,35 @@ public class Shade : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		cooldownTimer -= Time.deltaTime;
-		if (mTarget != null) {
-			/*if ((Vector2.Distance (transform.position, mTarget.transform.position) < mAggroRange)
-			    && !(Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange)) {
-				transform.position += (mTarget.transform.position - transform.position).normalized * Time.deltaTime;
-				isWalking = true;
-			}
-			if (Vector2.Distance (transform.position, mTarget.transform.position) < mCloseRange) {
-				transform.position -= (mTarget.transform.position - transform.position).normalized * Time.deltaTime;
-				isWalking = true;
-			}
-			if ((Vector2.Distance (transform.position, mTarget.transform.position) < mAggroRange)
-			    && cooldownTimer <= 0) {
-				if (DetermineAttack () < 4) {
-					isWalking = false;
-					Attack ();
-				}
-				else
-					cooldownTimer = attackDelay;
-			} else if (Vector2.Distance (transform.position, mTarget.transform.position) > mAggroRange) {
-				isWalking = false;
-			}*/
 
+		// Rules for attacking and moving
+		if (mTarget != null) {
 			if ((Vector2.Distance (transform.position, mTarget.transform.position) < mAggroRange)
-				&& !(Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange)) {
+			    && !(Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange)) {
 				transform.position += (mTarget.transform.position - transform.position).normalized * Time.deltaTime * mFollowSpeed;
 				isWalking = true;
-			}
-
-			if (Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange && cooldownTimer <= 0) {
-				//transform.position -= (mTarget.transform.position - transform.position).normalized * Time.deltaTime;
+			} else if (Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange && cooldownTimer <= 0) {
 				isWalking = false;
 				if (DetermineAttack () < 6) {
 					Attack ();
-				}
-				else
+				} else
 					cooldownTimer = attackDelay;
+			} else if(Vector2.Distance (transform.position, mTarget.transform.position) < mCloseRange) {
+				System.Random rnd = new System.Random ();
+				int value = rnd.Next (1, 3);
+				if (value == 1) {
+					transform.position -= (mTarget.transform.position - transform.position).normalized * Time.deltaTime * (mFollowSpeed / 2);
+					isWalking = true;
+				} else {
+					isWalking = false;
+					if (DetermineAttack () < 6) {
+						Attack ();
+					} else
+						cooldownTimer = attackDelay;
+				}
+			} else {
+				isWalking = false;
 			}
-
-
 		}
 
 		if(mAttacking)
@@ -85,7 +75,8 @@ public class Shade : MonoBehaviour {
 			{
 				mAttacking = false;
 				isAttacking = false;
-				//gameObject.GetComponent<BoxCollider2D> ().enabled = false;
+				CircleCollider2D[] col = GetComponentsInChildren<CircleCollider2D> ();
+				col [0].enabled = false;
 			}
 		}
 
@@ -134,11 +125,33 @@ public class Shade : MonoBehaviour {
 	}
 
 	void Attack() {
+		CircleCollider2D[] col = GetComponentsInChildren<CircleCollider2D> ();
+		col [0].enabled = true;
 		cooldownTimer = attackDelay;
 		mTime = 0f;
 		isAttacking = true;
 		mAttacking = true;
 		Debug.Log ("Attack!");
+	}
+
+	void OnTriggerStay2D(Collider2D col)
+	{
+		if (col.gameObject.name == "Sword") {
+			Debug.Log ("Shade Hit!");
+			TakeDamage (col.gameObject.GetComponent<Sword>().getSwordDamage());
+			col.gameObject.GetComponent<BoxCollider2D> ().enabled = false;
+		}
+	}
+
+	void TakeDamage(int damage) {
+		health -= damage;
+
+		if (health <= 0)
+			Die ();
+	}
+
+	void Die() {
+		Destroy (gameObject);
 	}
 
 	private void UpdateAnimator()

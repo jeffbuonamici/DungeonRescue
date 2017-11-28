@@ -25,9 +25,11 @@ public class MonstersCollision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name == "fireball(Clone)")
-        {
-            gameObject.GetComponent<Knight>().TakeDamage(2);
-        }
+		if (col.gameObject.name == "ShadeSword")
+		{
+			col.enabled = false;
+			gameObject.GetComponent<Knight>().TakeDamage(1);
+			Debug.Log ("Hit by Shade");
+		}
     }
 }
