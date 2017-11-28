@@ -20,6 +20,7 @@ public class HeartBar : MonoBehaviour
     {
         if (healthPoint == 0)
         {
+            //Add death animation + invoke delay to show death
             Application.LoadLevel("GameOver");
         }
     }
