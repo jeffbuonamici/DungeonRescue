@@ -18,7 +18,7 @@ public class HeartBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (healthPoint == 0)
+        if (healthPoint <= 0)
         {
             //Add death animation + invoke delay to show death
             Application.LoadLevel("GameOver");
@@ -27,22 +27,29 @@ public class HeartBar : MonoBehaviour
 
     public void loseHeart(int dmg)
     {
-        if (healthPoint >= 0)
+        if(dmg > healthPoint)
         {
-            for (int i = 0; i < dmg; i++)
+            Application.LoadLevel("GameOver");
+        }
+        else {
+            if (healthPoint >= 0)
             {
-                healthPoint--;
-                listHearts[healthPoint].active = false;
+                for (int i = 0; i < dmg; i++)
+                {
+                    healthPoint--;
+                    listHearts[healthPoint].active = false;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < listHearts.Length - 1; i++)
+                {
+                    listHearts[i].active = false;
+                }
+                healthPoint = 0;
             }
         }
-        else
-        {
-            for (int i = 0; i < listHearts.Length - 1; i++)
-            {
-                listHearts[i].active = false;
-            }
-            healthPoint = 0;
-        }
+        
     }
 
     public void gainHeart(int heart)

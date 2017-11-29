@@ -7,13 +7,18 @@ public class MonstersCollision : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.gameObject.name == "dragon")
+        if (col.gameObject.name == "pitfall")
+        {
+            gameObject.GetComponent<Knight>().TakeDamage(1);
+        }
+
+            if (col.gameObject.name == "dragon")
 		{
-			/*gameObject.GetComponent<Knight>().TakeDamage(1);
+			gameObject.GetComponent<Knight>().TakeDamage(col.gameObject.GetComponent<Dragon>().DealDamage());
             if (gameObject.GetComponent<Knight>().mInvincible)
             {
                 gameObject.GetComponent<Knight>().TakeDamage(0);
-            }*/
+            }
 		}
 
 		if (col.gameObject.name == "potion")
@@ -23,7 +28,8 @@ public class MonstersCollision : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D col)
+
+    void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.gameObject.name == "ShadeSword")
 		{

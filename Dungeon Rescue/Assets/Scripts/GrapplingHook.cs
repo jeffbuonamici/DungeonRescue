@@ -7,7 +7,7 @@ public class GrapplingHook : MonoBehaviour {
     DistanceJoint2D joint;
     Vector3 targetPos;
     RaycastHit2D hit;
-    public float distance = 5.0f;
+    public float distance;
     public LayerMask mask;
     public LineRenderer line;
     public float step = 0.02f;
@@ -44,21 +44,62 @@ public class GrapplingHook : MonoBehaviour {
         }*/
 
 
+        if (Input.GetMouseButtonDown(1) && OnHover.isHovered && dist < 7) //&& Vector2.Distance(transform.position, targetPos) < 4)
+        {
+            joint.distance = 2;
+            Debug.Log("df");
+            swinging = true;
+            Debug.Log("hook");
+
+            line.startWidth = 0.0f;
+            line.endWidth = 0.0f;
+
+            hit = Physics2D.Raycast(transform.position, targetPos - transform.position, distance, mask);
+            if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+            {
+                Debug.Log("iq");
+                line.startWidth = 0.1f;
+                line.endWidth = 0.1f;
+                joint.enabled = true;
+                joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                //joint.distance = Vector2.Distance(transform.position, hit.point);
+
+                //joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                //joint.distance = Vector2.Distance(transform.position, hit.point);
+
+                line.enabled = true;
+                line.SetPosition(0, transform.position);
+                line.SetPosition(1, hit.point);
+
+                float x = hit.point.x;
+                float y = hit.point.y;
+
+                hook1 = Instantiate(hook);
+                hook1.transform.position = hit.point;
+
+
+            }
+
+        }
+
         if (Input.GetMouseButtonDown(0) && OnHover.isHovered && dist < 7) //&& Vector2.Distance(transform.position, targetPos) < 4)
         {
+            joint.distance = 4.5f;
             swinging = true;
-            line.startWidth = 0.1f;
-            line.endWidth = 0.1f;
+            line.startWidth = 0.0f;
+            line.endWidth = 0.0f;
             Debug.Log("hook");
             
             hit = Physics2D.Raycast(transform.position, targetPos - transform.position, distance, mask);
             if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
             {
+                line.startWidth = 0.1f;
+                line.endWidth = 0.1f;
                 joint.enabled = true;
                 joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
                 //joint.distance = Vector2.Distance(transform.position, hit.point);
 
-                joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                //joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
                 //joint.distance = Vector2.Distance(transform.position, hit.point);
 
                 line.enabled = true;
@@ -78,14 +119,15 @@ public class GrapplingHook : MonoBehaviour {
 
         //line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
 
-        if (Input.GetMouseButton(0) && OnHover.isHovered)
+        if ((Input.GetMouseButton(0) || Input.GetMouseButton(1)) && OnHover.isHovered)
         {
             //Debug.Log("Getkey");
             line.SetPosition(0, transform.position);
 
         }
 
-        if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
         {
             swinging = false;
             OnHover.isHovered = false;

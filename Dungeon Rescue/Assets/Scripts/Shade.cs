@@ -75,8 +75,8 @@ public class Shade : MonoBehaviour {
 			{
 				mAttacking = false;
 				isAttacking = false;
-				CircleCollider2D[] col = GetComponentsInChildren<CircleCollider2D> ();
-				col [0].enabled = false;
+				//CircleCollider2D[] col = GetComponentsInChildren<CircleCollider2D> ();
+				//col [0].enabled = false;
 			}
 		}
 
@@ -125,8 +125,8 @@ public class Shade : MonoBehaviour {
 	}
 
 	void Attack() {
-		CircleCollider2D[] col = GetComponentsInChildren<CircleCollider2D> ();
-		col [0].enabled = true;
+		//CircleCollider2D[] col = GetComponentsInChildren<CircleCollider2D> ();
+		// [0].enabled = true;
 		cooldownTimer = attackDelay;
 		mTime = 0f;
 		isAttacking = true;
