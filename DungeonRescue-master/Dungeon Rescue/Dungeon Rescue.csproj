@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\OnHover.cs" />
     <Compile Include="Assets\Scripts\Potion.cs" />
     <Compile Include="Assets\Scripts\Shade.cs" />
+    <Compile Include="Assets\Scripts\ShaderSpawner.cs" />
     <Compile Include="Assets\Scripts\Sword.cs" />
   </ItemGroup>
   <ItemGroup>

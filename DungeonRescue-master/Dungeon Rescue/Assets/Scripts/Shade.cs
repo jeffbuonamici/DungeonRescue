@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Shade : MonoBehaviour {
 
-	[SerializeField]
-	Transform mTarget;
+	Vector3 mTarget;
 	[SerializeField]
 	float mFollowSpeed;
 	[SerializeField]
@@ -37,24 +36,24 @@ public class Shade : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		cooldownTimer -= Time.deltaTime;
-
-		// Rules for attacking and moving
-		if (mTarget != null) {
-			if ((Vector2.Distance (transform.position, mTarget.transform.position) < mAggroRange)
-				&& !(Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange)) {
-				transform.position += (mTarget.transform.position - transform.position).normalized * Time.deltaTime * mFollowSpeed;
+        mTarget  = GameObject.FindGameObjectWithTag("Knight").transform.position;
+        // Rules for attacking and moving
+        if (mTarget != null) {
+			if ((Vector2.Distance (transform.position, mTarget) < mAggroRange)
+				&& !(Vector2.Distance (transform.position, mTarget) < mIdleRange)) {
+				transform.position += (mTarget- transform.position).normalized * Time.deltaTime * mFollowSpeed;
 				isWalking = true;
-			} else if (Vector2.Distance (transform.position, mTarget.transform.position) < mIdleRange && cooldownTimer <= 0) {
+			} else if (Vector2.Distance (transform.position, mTarget) < mIdleRange && cooldownTimer <= 0) {
 				isWalking = false;
 				if (DetermineAttack () < 6) {
 					Attack ();
 				} else
 					cooldownTimer = attackDelay;
-			} else if(Vector2.Distance (transform.position, mTarget.transform.position) < mCloseRange) {
+			} else if(Vector2.Distance (transform.position, mTarget) < mCloseRange) {
 				System.Random rnd = new System.Random ();
 				int value = rnd.Next (1, 3);
 				if (value == 1) {
-					transform.position -= (mTarget.transform.position - transform.position).normalized * Time.deltaTime * (mFollowSpeed / 2);
+					transform.position -= (mTarget - transform.position).normalized * Time.deltaTime * (mFollowSpeed / 2);
 					isWalking = true;
 				} else {
 					isWalking = false;
@@ -82,9 +81,9 @@ public class Shade : MonoBehaviour {
 
 		if(mTarget != null)
 		{
-			if (mTarget.position.x < transform.position.x) {
+			if (mTarget.x < transform.position.x) {
 				FaceDirection(-Vector2.right);
-			} else if (mTarget.position.x >= transform.position.x){
+			} else if (mTarget.x >= transform.position.x){
 				FaceDirection(Vector2.right);
 			}
 		}
@@ -93,7 +92,7 @@ public class Shade : MonoBehaviour {
 
 	}
 
-	public void SetTarget(Transform target)
+	public void SetTarget(Vector3 target)
 	{
 		mTarget = target;
 	}

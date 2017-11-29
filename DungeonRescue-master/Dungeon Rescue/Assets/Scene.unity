@@ -1146,7 +1146,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4720654941880942, guid: cce79f772365d42789808841ac97926c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -31.19
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 4720654941880942, guid: cce79f772365d42789808841ac97926c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3333,6 +3333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1096108550}
   - component: {fileID: 1096108551}
+  - component: {fileID: 1096108552}
   m_Layer: 0
   m_Name: indoorlevel1
   m_TagString: Untagged
@@ -3376,6 +3377,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 1755617886218196, guid: 433d62ca36b704d7a8e78af6f17b68fb,
+    type: 2}
+--- !u!114 &1096108552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1096108549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cae8c251ee3c6b4e9b7e3314f8da87f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefab: {fileID: 1337426823129076, guid: cce79f772365d42789808841ac97926c,
     type: 2}
 --- !u!1 &1106081741
 GameObject:
