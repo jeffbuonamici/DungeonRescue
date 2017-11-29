@@ -18,6 +18,7 @@ public class HeartBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(healthPoint);
         if (healthPoint == 0)
         {
             //Add death animation + invoke delay to show death

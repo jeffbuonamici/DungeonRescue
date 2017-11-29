@@ -4,62 +4,71 @@ using UnityEngine;
 
 public class FollowTarget : MonoBehaviour {
 
-	[SerializeField]
-	Transform mTarget;
-	[SerializeField]
-	float mFollowSpeed;
-	[SerializeField]
-	float mFollowRange;
+    Vector3 mTarget;
 
-	float mArriveThreshold = 0.05f;
-	Vector2 mFacingDirection;
+    [SerializeField]
+    float mFollowSpeed;
+    [SerializeField]
+    float mFollowRange;
 
-	void Update ()
-	{
-		if(mTarget != null)
-		{
-			if (Vector2.Distance (transform.position, mTarget.transform.position) < mFollowRange) {
-				transform.position += (mTarget.transform.position - transform.position).normalized * Time.deltaTime;
+    float mArriveThreshold = 0.05f;
+    Vector2 mFacingDirection;
 
-				if (mTarget.position.x < transform.position.x) {
-					FaceDirection(-Vector2.right);
-				} else if(mTarget.position.x >= transform.position.x){
-					FaceDirection(Vector2.right);
-				}
-			}
-		}
-	}
+    void Update()
+    {
+        mTarget = GameObject.FindGameObjectWithTag("Knight").transform.position;
+        if (mTarget != null)
+        {
+            if (Vector2.Distance(transform.position, mTarget) < mFollowRange)
+            {
+                transform.position += (mTarget - transform.position).normalized * Time.deltaTime;
 
-	public void SetTarget(Transform target)
-	{
-		mTarget = target;
-	}
+                if (mTarget.x < transform.position.x)
+                {
+                    FaceDirection(-Vector2.right);
+                }
+                else if (mTarget.x >= transform.position.x)
+                {
+                    FaceDirection(Vector2.right);
+                }
+            }
+        }
+    }
 
-	bool changed(float a,float b){
-		if((int)a == (int)b){
-			return true;
-		}else{
-			return false;
-		}
-	}
+    public void SetTarget(Vector3 target)
+    {
+        mTarget = target;
+    }
 
-	private void FaceDirection(Vector2 direction)
-	{
-		mFacingDirection = direction;
-		if(direction == Vector2.right)
-		{
-			Vector3 newScale = new Vector3(Mathf.Abs (transform.localScale.x), transform.localScale.y, transform.localScale.z);
-			transform.localScale = newScale;
-		}
-		else
-		{
-			Vector3 newScale = new Vector3(-Mathf.Abs (transform.localScale.x), transform.localScale.y, transform.localScale.z);
-			transform.localScale = newScale;
-		}
-	}
+    bool changed(float a, float b)
+    {
+        if ((int)a == (int)b)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public Vector2 GetFacingDirection()
-	{
-		return mFacingDirection;
-	}
+    private void FaceDirection(Vector2 direction)
+    {
+        mFacingDirection = direction;
+        if (direction == Vector2.right)
+        {
+            Vector3 newScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = newScale;
+        }
+        else
+        {
+            Vector3 newScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = newScale;
+        }
+    }
+
+    public Vector2 GetFacingDirection()
+    {
+        return mFacingDirection;
+    }
 }

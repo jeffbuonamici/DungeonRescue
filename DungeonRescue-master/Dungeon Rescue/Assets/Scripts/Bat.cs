@@ -32,5 +32,7 @@ public class Bat : MonoBehaviour {
 
 	void Die() {
 		Destroy (gameObject);
-	}
+        potion = Instantiate(mPotionPrefab, new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f), Quaternion.identity);
+        potion.name = "potion";
+    }
 }
